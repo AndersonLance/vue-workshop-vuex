@@ -15,11 +15,18 @@
 </template>
 
 <script>
+import {mapActions} from 'vuex';
 import Episodes from './views/Episodes.vue';
 export default {
   components: {
     Episodes,
   },
+  methods: {
+    ...mapActions('char', ['fetchCharacters'])
+  },
+  created() {
+    this.fetchCharacters();
+  }
 };
 </script>
 

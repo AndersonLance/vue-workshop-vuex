@@ -29,15 +29,14 @@
 </template>
 
 <script>
+import {mapState, mapActions} from 'vuex';
 export default {
-  data() {
-    return {
-      favoriteCharacters: [],
-    };
-  },
   methods: {
-    removeFromFavorites() {},
+    ...mapActions(['removeFromFavorites'])
   },
+  computed: {
+    ...mapState(['favoriteCharacters'])
+  }
 };
 </script>
 

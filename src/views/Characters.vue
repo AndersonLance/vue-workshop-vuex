@@ -11,11 +11,15 @@
           :img-alt="character.name"
           img-top
           class="mb-2"
+          :class="{colored: isCharacterInFavorites(character.id)}"
         >
           <b-card-text>
             {{ character.location.name }}
           </b-card-text>
-          <b-button variant="info">Add to favorites</b-button>
+          <b-button 
+            variant="info" 
+            :disabled="isCharacterInFavorites(character.id)"
+            @click="addToFavorites(character)">Add to favorites</b-button>
         </b-card>
       </b-col>
     </template>
@@ -23,27 +27,20 @@
 </template>
 
 <script>
-import axios from 'axios';
+import {mapState, mapActions, mapGetters} from 'vuex';
 
-axios.defaults.baseURL = 'https://rickandmortyapi.com/api/';
 export default {
-  data() {
-    return {
-      characters: [],
-      isLoading: false,
-    };
+  inject: ['baseUrl'],
+  computed: {
+    ...mapState('char', {
+      characters: state => state.characters,
+      isLoading: state => state.isLoading
+    }),
+    ...mapGetters(['isCharacterInFavorites'])
   },
-  created() {
-    this.isLoading = true;
-    axios
-      .get('/character')
-      .then((res) => {
-        this.characters = res.data.results;
-      })
-      .finally(() => {
-        this.isLoading = false;
-      });
-  },
+  methods: {
+    ...mapActions(['addToFavorites'])
+  }
 };
 </script>
 
