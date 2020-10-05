@@ -9,11 +9,11 @@ Vue.use(Vuex)
 
 const char = {
     namespaced: true,
-    state: {
+    state: () => ({
         characters: [],
         isLoading: false,
         error: null,
-    },
+    }),
     mutations: {
         [types.REQUEST_CHARACTERS](state, characters) {
             state.isLoading = true;
